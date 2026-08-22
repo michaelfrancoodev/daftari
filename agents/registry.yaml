@@ -1,0 +1,70 @@
+# Catalogue of DAFTARI's agent fleet, per Master Specification Section 18.
+#
+# Status is stated plainly rather than implied: "implemented" means a real,
+# deployable, tested service exists in this repository (code + tests +
+# Dockerfile). Every agent below is implemented — see each agent's own
+# directory for its test suite and how to run it.
+#
+# DAFTARI does not fetch, cache, or display any external "gold price" —
+# see docs/LIMITATIONS.md for why. There is deliberately no "Bei" (price)
+# agent in this fleet.
+
+agents:
+  - name: sikio
+    translation: "Ear"
+    status: implemented
+    pattern: Sequential
+    model: gemini-3.5-flash
+    trigger: "Called by the app once a network appears, only for a field the on-device Interpreter already flagged as uncertain"
+    path: agents/sikio/
+    endpoint: "POST /resolve-field"
+    summary: >
+      Refines an uncertain amount, quantity, or counterparty that
+      lib/domain/interpreter.dart (the on-device, offline parser) could
+      not read with confidence. Never on the critical path of capture —
+      the device already works completely offline without this agent.
+
+  - name: daftari
+    translation: "Ledger"
+    status: implemented
+    pattern: Sequential
+    model: none — deterministic
+    trigger: "Sync, when more than one device has entries for a linked working group"
+    path: agents/daftari/
+    endpoint: "POST /reconcile-batch"
+    tests: "12/12 passing — see agents/daftari/test_agent.py"
+    summary: >
+      Validates entry types, deduplicates entries that arrived from two
+      devices recording the same real event, and computes cost-per-gram
+      with the exact same arithmetic as lib/domain/ledger.dart. Explicitly
+      not an LLM agent — see Master Specification, Section 9.
+
+  - name: mkumbushi
+    translation: "Reminder"
+    status: implemented
+    pattern: "Loop, then long-running with human-in-the-loop"
+    model: gemini-3.5-flash
+    trigger: "Cloud Scheduler, every evening"
+    path: agents/mkumbushi/
+    endpoints: "POST /evening-check, POST /answer"
+    tests: "10/10 passing — see agents/mkumbushi/test_gaps.py"
+    summary: >
+      Deterministic gap detection (gaps.py, a direct port of
+      lib/domain/gap_detector.dart) finds what to ask about; Gemini
+      phrases the one resulting question naturally. /answer resolves a
+      question independently, since the reply may arrive days later.
+
+  - name: mlinganishi
+    translation: "Reconciler"
+    status: implemented
+    pattern: "Parallel and Custom"
+    model: gemini-3.5-flash (optional fuzzy-matching pass only)
+    trigger: "Sync, when a share-code link exists between two parties"
+    path: agents/mlinganishi/
+    endpoint: "POST /reconcile"
+    tests: "5/5 passing — see agents/mlinganishi/test_reconcile.py"
+    summary: >
+      Deterministic exact-match reconciliation between two linked
+      parties' records (reconcile.py) finds agreement and disagreement
+      with no model needed. An optional Gemini pass resolves entries left
+      unmatched only because of a differently-spelled counterparty name.
