@@ -1,0 +1,100 @@
+@import 'tailwindcss';
+@import 'tw-animate-css';
+
+@custom-variant dark (&:is(.dark *));
+
+/*
+  DAFTARI design tokens.
+  Two colours carry the entire interface: ink (navy, structural) and gold
+  (the one accent, reserved for a single action). Status colours exist only
+  as small dots, always paired with words — colour alone fails in bright sun.
+*/
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-gold: var(--gold);
+  --color-gold-foreground: var(--gold-foreground);
+  --color-fresh: var(--fresh);
+  --color-ageing: var(--ageing);
+  --color-stale: var(--stale);
+
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+
+  --radius-sm: calc(var(--radius) * 0.5);
+  --radius-md: calc(var(--radius) * 0.75);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.5);
+}
+
+:root {
+  color-scheme: light;
+
+  /* Surface: off-white rather than pure white, for less glare outdoors. */
+  --background: oklch(0.99 0.003 90);
+  --foreground: oklch(0.19 0.03 250);
+
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.19 0.03 250);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.19 0.03 250);
+
+  /* Ink: text, outlines, structure. */
+  --primary: oklch(0.19 0.03 250);
+  --primary-foreground: oklch(0.99 0.003 90);
+
+  --secondary: oklch(0.96 0.005 90);
+  --secondary-foreground: oklch(0.19 0.03 250);
+
+  --muted: oklch(0.96 0.005 90);
+  --muted-foreground: oklch(0.45 0.02 250);
+
+  --accent: oklch(0.96 0.005 90);
+  --accent-foreground: oklch(0.19 0.03 250);
+
+  --destructive: oklch(0.48 0.19 25);
+
+  --border: oklch(0.9 0.006 90);
+  --input: oklch(0.9 0.006 90);
+  --ring: oklch(0.7 0.12 75);
+
+  /* Gold: the single accent. Exactly one action per screen. */
+  --gold: oklch(0.75 0.14 75);
+  --gold-foreground: oklch(0.19 0.03 250);
+
+  /* Status dots. Never used alone; always paired with words. */
+  --fresh: oklch(0.5 0.12 150);
+  --ageing: oklch(0.6 0.14 75);
+  --stale: oklch(0.5 0.19 25);
+
+  --radius: 0.75rem;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+  /* Tabular figures throughout: money columns must align. */
+  .tabular {
+    font-feature-settings: 'tnum' 1;
+  }
+}

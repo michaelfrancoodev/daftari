@@ -1,0 +1,29 @@
+# Node / Next.js
+node_modules/
+.next/
+.env*.local
+npm-debug.log*
+
+# Flutter
+flutter/daftari/.dart_tool/
+flutter/daftari/.flutter-plugin-dependencies
+flutter/daftari/build/
+flutter/daftari/.packages
+flutter/daftari/pubspec.lock
+flutter/daftari/android/.gradle/
+flutter/daftari/android/local.properties
+flutter/daftari/ios/Flutter/Flutter.podspec
+flutter/daftari/ios/Pods/
+flutter/daftari/*.iml
+flutter/daftari/.idea/
+
+# Python agents
+agents/**/__pycache__/
+agents/**/*.pyc
+agents/**/.venv/
+agents/**/venv/
+
+# OS
+.DS_Store
+Thumbs.db
+tsconfig.tsbuildinfo
