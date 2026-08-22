@@ -19,8 +19,8 @@ export function SiteHeader() {
   return (
     <header className="sticky top-0 z-40 border-b border-border/70 bg-background/90 backdrop-blur-sm">
       <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-4 sm:px-6">
-        <Link href="#top" className="flex items-center gap-2.5">
-          <Image src="/logo.png" alt="" width={28} height={28} className="h-7 w-7" />
+        <Link href="/" className="flex items-center gap-2.5">
+          <Image src="/logo.png" alt="DAFTARI" width={28} height={28} className="h-7 w-7" />
           <span className="text-sm font-semibold tracking-[0.18em] text-foreground">DAFTARI</span>
         </Link>
 
@@ -43,16 +43,6 @@ export function SiteHeader() {
           <div className="flex items-center gap-1 rounded-full border border-border p-1 text-xs font-medium">
             <button
               type="button"
-              onClick={() => setLang("sw")}
-              aria-pressed={lang === "sw"}
-              className={`rounded-full px-2.5 py-1 transition-colors ${
-                lang === "sw" ? "bg-primary text-primary-foreground" : "text-muted-foreground hover:text-foreground"
-              }`}
-            >
-              SW
-            </button>
-            <button
-              type="button"
               onClick={() => setLang("en")}
               aria-pressed={lang === "en"}
               className={`rounded-full px-2.5 py-1 transition-colors ${
@@ -60,6 +50,16 @@ export function SiteHeader() {
               }`}
             >
               EN
+            </button>
+            <button
+              type="button"
+              onClick={() => setLang("sw")}
+              aria-pressed={lang === "sw"}
+              className={`rounded-full px-2.5 py-1 transition-colors ${
+                lang === "sw" ? "bg-primary text-primary-foreground" : "text-muted-foreground hover:text-foreground"
+              }`}
+            >
+              SW
             </button>
           </div>
 

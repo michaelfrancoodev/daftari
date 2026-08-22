@@ -2,7 +2,7 @@
 
 import { useLang } from "@/lib/i18n"
 
-const REPO_URL = process.env.NEXT_PUBLIC_REPO_URL || "https://github.com/daftari-app/daftari"
+const REPO_URL = process.env.NEXT_PUBLIC_REPO_URL || "https://github.com/michaelfrancoodev/daftari"
 
 export function DownloadSection() {
   const { t } = useLang()
@@ -27,8 +27,8 @@ export function DownloadSection() {
 
           <div className="flex flex-wrap gap-3 md:justify-end">
             {/* Points at GitHub Releases rather than a fabricated
-                /daftari.apk file — see DEPLOYMENT.md for how a real signed
-                build gets published there. */}
+                /daftari.apk file — see docs/DEPLOYMENT.md for how a real
+                signed build gets published there. */}
             <a
               href={`${REPO_URL}/releases`}
               target="_blank"
@@ -36,12 +36,6 @@ export function DownloadSection() {
               className="inline-flex h-14 items-center rounded-xl bg-gold px-7 text-sm font-semibold text-gold-foreground transition-opacity hover:opacity-90"
             >
               {t.ctaDownload}
-            </a>
-            <a
-              href="/app"
-              className="inline-flex h-14 items-center rounded-xl border-[1.5px] border-primary-foreground/40 px-7 text-sm font-semibold text-primary-foreground transition-colors hover:bg-primary-foreground/10"
-            >
-              {t.ctaTry}
             </a>
           </div>
         </div>

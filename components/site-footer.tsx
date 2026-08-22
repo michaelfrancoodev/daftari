@@ -6,7 +6,7 @@ import { useLang } from "@/lib/i18n"
 
 // Set NEXT_PUBLIC_REPO_URL when you connect this project to your own Git
 // host — this is a real, working fallback rather than a fabricated link.
-const REPO_URL = process.env.NEXT_PUBLIC_REPO_URL || "https://github.com/daftari-app/daftari"
+const REPO_URL = process.env.NEXT_PUBLIC_REPO_URL || "https://github.com/michaelfrancoodev/daftari"
 
 export function SiteFooter() {
   const { t } = useLang()

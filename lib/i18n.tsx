@@ -4,7 +4,9 @@ import { createContext, useContext, useMemo, useState, type ReactNode } from "re
 
 /**
  * One language at a time, never mixed — the same rule the Flutter app
- * enforces. Swahili is the template; English is written against it.
+ * enforces. Swahili is the template the English copy is written against
+ * (Rule #10), but English is what a first-time visitor to this website
+ * sees by default.
  */
 export type Lang = "sw" | "en"
 
@@ -23,17 +25,7 @@ export const dictionary = {
     heroBody:
       "Bonyeza mara moja, ongea kadri unavyotaka, bonyeza tena kuacha. DAFTARI hugawa sentensi yako kwenye matukio, huhifadhi kila neno lako, na hukueleza gharama ya kila gramu — kutokana na pesa yako mwenyewe, si makadirio ya soko — yote bila mtandao.",
     ctaDownload: "PAKUA APK",
-    ctaTry: "JARIBU KWENYE WEB",
     apkMeta: "18 MB · Android 6.0 na juu",
-    statFiles: "Sehemu 10 za ujenzi",
-    statTests: "Vipimo 120+",
-    statScreens: "Skrini 16",
-    statLang: "Lugha 2",
-    ledgerCardTitle: "BATCH YA LEO",
-    ledgerCardCostLabel: "Gharama ya Gramu",
-    ledgerCardYieldLabel: "Dhahabu",
-    ledgerCardTotalLabel: "Jumla ya Gharama",
-    ledgerCardNote: "Kutoka gharama zako halisi — si bei ya soko",
     featuresKicker: "KWA NINI",
     featuresTitle: "Iliyojengwa kwa siku isiyo ya kawaida",
     features: [
@@ -104,17 +96,7 @@ export const dictionary = {
     heroBody:
       "Press once, speak for as long as you need, press again to stop. DAFTARI splits your sentence into events, keeps every word you said, and tells you what each gram actually cost you — from your own spending, not a market estimate — all of it offline.",
     ctaDownload: "DOWNLOAD APK",
-    ctaTry: "TRY IN THE BROWSER",
     apkMeta: "18 MB · Android 6.0 and up",
-    statFiles: "10 build parts",
-    statTests: "120+ tests",
-    statScreens: "16 screens",
-    statLang: "2 languages",
-    ledgerCardTitle: "TODAY'S BATCH",
-    ledgerCardCostLabel: "Cost per gram",
-    ledgerCardYieldLabel: "Gold",
-    ledgerCardTotalLabel: "Total cost",
-    ledgerCardNote: "From your own real spending — not a market price",
     featuresKicker: "WHY IT EXISTS",
     featuresTitle: "Built for a day that is never orderly",
     features: [
@@ -182,7 +164,7 @@ const LangContext = createContext<{
 } | null>(null)
 
 export function LangProvider({ children }: { children: ReactNode }) {
-  const [lang, setLang] = useState<Lang>("sw")
+  const [lang, setLang] = useState<Lang>("en")
   const value = useMemo(() => ({ lang, setLang, t: dictionary[lang] }), [lang])
   return <LangContext.Provider value={value}>{children}</LangContext.Provider>
 }

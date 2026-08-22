@@ -13,7 +13,7 @@ export function ScreensSection() {
           {t.screensTitle}
         </h2>
 
-        <div className="mt-14 grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="mt-14 grid grid-cols-2 gap-8 lg:grid-cols-4">
           {t.screens.map((group) => (
             <div key={group.group}>
               <h3 className="text-[11px] font-semibold tracking-[0.14em] text-gold-foreground">
