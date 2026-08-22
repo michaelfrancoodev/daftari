@@ -64,6 +64,8 @@ test/                          101 test cases across 7 files
 python3 ../../scripts/gen_l10n_dart.py
 ```
 
+(The script locates the repo's `flutter/daftari` directory relative to its own file location, so it can be run from anywhere — `cd` into `scripts/` and running `python3 gen_l10n_dart.py` also works.)
+
 That script reads the same two `.arb` files and produces an equivalent, hand-verified `L` class. **The first thing to do on a machine with the real Flutter SDK installed is run `flutter gen-l10n` and diff its output against the checked-in files** — they should be structurally equivalent, but the real tool is authoritative. If you add or change a string, edit the `.arb` files (or `scripts/gen_l10n.py`, which generates them) first, then regenerate.
 
 ## Why there's no gold price anywhere in this app
