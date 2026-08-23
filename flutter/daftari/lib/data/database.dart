@@ -1,11 +1,12 @@
-import "dart:io";
 import "package:drift/drift.dart";
-import "package:drift/native.dart";
-import "package:path/path.dart" as p;
-import "package:path_provider/path_provider.dart";
 import "package:uuid/uuid.dart";
+import "../domain/capture.dart";
+import "../domain/entry.dart";
 import "../domain/enums.dart";
 import "database_mappers.dart";
+import "connection/connection_stub.dart"
+    if (dart.library.io) "connection/connection_native.dart"
+    if (dart.library.js_interop) "connection/connection_web.dart" as impl;
 
 part "database.g.dart";
 
@@ -72,7 +73,7 @@ class EntryRows extends Table {
 
 @DriftDatabase(tables: [CaptureRows, EntryRows])
 class AppDatabase extends _$AppDatabase {
-  AppDatabase() : super(_openConnection());
+  AppDatabase() : super(impl.openConnection());
   AppDatabase.forTesting(super.executor);
 
   @override
@@ -170,12 +171,4 @@ class AppDatabase extends _$AppDatabase {
   // would misrepresent what any individual miner actually receives — see
   // domain/ledger.dart's `MarginAssessment` for what replaced this.
   // ---------------------------------------------------------------------
-}
-
-LazyDatabase _openConnection() {
-  return LazyDatabase(() async {
-    final dbFolder = await getApplicationDocumentsDirectory();
-    final file = File(p.join(dbFolder.path, "daftari.sqlite"));
-    return NativeDatabase.createInBackground(file);
-  });
 }

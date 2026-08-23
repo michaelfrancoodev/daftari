@@ -7,6 +7,17 @@ The device-side app: 16 screens, an offline-first SQLite ledger, and a hand-writ
 - Flutter SDK (stable channel) — this project was written against the API surface of Flutter 3.24+ / Dart 3.9+ (see `pubspec.yaml`'s `environment.sdk` constraint), but was not built or tested against an actual installed SDK — see **Toolchain note** below before treating anything here as final.
 - Android Studio or Xcode, if targeting a device/emulator rather than web.
 
+## Platform notes
+
+**Android / iOS / desktop** use a real SQLite file via `dart:ffi` (`lib/data/connection/connection_native.dart`) — this is the primary target and should work out of the box after `flutter pub get` and `build_runner`.
+
+**Flutter Web** uses Drift's WASM SQLite backend instead (`lib/data/connection/connection_web.dart`), since `dart:ffi` does not exist on web at all. This requires two additional files in this project's `web/` folder that are **not checked into this repository**, because they are binary build artifacts tied to the exact `sqlite3`/`drift` versions in `pubspec.yaml`:
+
+- `web/sqlite3.wasm`
+- `web/drift_worker.js`
+
+Follow [Drift's official web setup guide](https://drift.simonbinder.eu/platforms/web/) to obtain the pair matching your installed package versions, then `flutter run -d chrome` will work. Until those files are added, running on web fails with one clear, intentional error message rather than a crash — see `connection_web.dart`'s doc comment for the exact failure mode. This is a genuinely open item; see [`../../docs/LIMITATIONS.md`](../../docs/LIMITATIONS.md) for the full account of how it was found.
+
 ## Spin-up instructions
 
 ```bash

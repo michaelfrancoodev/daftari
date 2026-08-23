@@ -2,7 +2,7 @@ import "package:flutter/material.dart";
 import "package:provider/provider.dart";
 import "../../app/providers.dart";
 import "../../data/ledger_repository.dart";
-import "../../domain/gap_detector.dart";
+import "../../domain/gap_detector.dart" hide Gap;
 import "../../l10n/app_localizations.dart";
 import "../../theme/tokens.dart";
 import "../../widgets/common.dart";
