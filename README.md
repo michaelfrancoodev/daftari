@@ -22,6 +22,8 @@ Built for the **[All Things Agentic Hackathon](https://allthingsagentichackathon
 | `agents/mlinganishi/` | Reconciles two linked parties' records | Cloud Run |
 | `docs/` | Architecture, limitations, and deployment documentation | — |
 
+See [`docs/HACKATHON_READINESS.md`](docs/HACKATHON_READINESS.md) for a line-by-line check of this project against the hackathon's official judging rubric — including the one honest, high-priority gap: **nothing is deployed yet.** The code for four Cloud Run agents and a Vercel-ready website all exists and is tested, but actually deploying them requires a real Google Cloud project and Vercel account, which only the project owner can set up — see [`docs/DEPLOYMENT.md`](docs/DEPLOYMENT.md) for the exact commands.
+
 Four independent Cloud Run services, one Vercel-deployed website, one Flutter app. Nothing in this list requires any of the others to be running — the app works fully offline with zero agents deployed at all (Rule #2).
 
 ---
