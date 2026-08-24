@@ -26,8 +26,21 @@ class ReviewScreen extends StatefulWidget {
 }
 
 class _ReviewScreenState extends State<ReviewScreen> {
-  final List<DraftEntry> _drafts = List.of(widget.args.drafts);
+  // `late final` (not a field initializer referencing `widget` directly):
+  // `widget` is not available yet at field-initializer time, only once the
+  // State object is fully attached — assigning in initState() below is the
+  // correct place. A plain field-initializer here compiles fine as `late`
+  // (deferred access) but fails as a bare `final` (eager access at
+  // construction), which is exactly the real compile error a genuine
+  // `flutter analyze` run caught here.
+  late final List<DraftEntry> _drafts;
   bool _saving = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _drafts = List.of(widget.args.drafts);
+  }
 
   Future<void> _editDraft(int index) async {
     final l = L.of(context);

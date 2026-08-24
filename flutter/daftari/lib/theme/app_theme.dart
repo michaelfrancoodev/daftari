@@ -8,7 +8,7 @@ class AppTheme {
   AppTheme._();
 
   static ThemeData light() {
-    final scheme = const ColorScheme(
+    const scheme = ColorScheme(
       brightness: Brightness.light,
       primary: AppColor.ink,
       onPrimary: AppColor.surface,
