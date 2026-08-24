@@ -12,6 +12,9 @@ flutter/daftari/.packages
 flutter/daftari/pubspec.lock
 flutter/daftari/android/.gradle/
 flutter/daftari/android/local.properties
+flutter/daftari/android/key.properties
+flutter/daftari/*.jks
+flutter/daftari/*.keystore
 flutter/daftari/ios/Flutter/Flutter.podspec
 flutter/daftari/ios/Pods/
 flutter/daftari/*.iml

@@ -41,10 +41,10 @@ class SettingsScreen extends StatelessWidget {
       // for a real device-storage plugin; this satisfies the in-app
       // confirmation contract without requiring one for the hackathon
       // build. See LIMITATIONS.md.
-      if (context.mounted) {
-        await context.read<SettingsController>().resetOnboardingForTesting();
-        context.go("/onboarding/language");
-      }
+      if (!context.mounted) return;
+      await context.read<SettingsController>().resetOnboardingForTesting();
+      if (!context.mounted) return;
+      context.go("/onboarding/language");
     }
   }
 

@@ -5,7 +5,6 @@ import "../../app/providers.dart";
 import "../../app/router.dart";
 import "../../core/money.dart";
 import "../../data/ledger_repository.dart";
-import "../../domain/entry.dart";
 import "../../domain/enums.dart";
 import "../../domain/interpreter.dart";
 import "../../l10n/app_localizations.dart";

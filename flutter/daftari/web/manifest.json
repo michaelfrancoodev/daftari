@@ -1,11 +1,11 @@
 {
-    "name": "daftari",
-    "short_name": "daftari",
+    "name": "DAFTARI — The Miner's Ledger",
+    "short_name": "DAFTARI",
     "start_url": ".",
     "display": "standalone",
-    "background_color": "#0175C2",
-    "theme_color": "#0175C2",
-    "description": "A new Flutter project.",
+    "background_color": "#FCFCFA",
+    "theme_color": "#0B1B2B",
+    "description": "A ledger that cannot be lost — offline-first, for small-scale gold miners and traders.",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [

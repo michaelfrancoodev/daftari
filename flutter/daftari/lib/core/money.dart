@@ -20,6 +20,17 @@ final class Money implements Comparable<Money> {
 
   /// Parses user or machine input such as `500,000`, `500 000` or `500.000`.
   ///
+  /// A dot, comma, or space is only ever treated as a *thousands grouping*
+  /// separator, never a decimal point — Tanzanian shillings have no
+  /// fractional unit, so `500.5` is not "500 point 5 shillings", it is an
+  /// amount this parser cannot make sense of. Grouping is validated
+  /// properly: every group after the first must be exactly three digits
+  /// (`500.000` groups as `500` + `000`), which is what correctly tells
+  /// `500.000` (five hundred thousand) apart from `500.5` (not a valid
+  /// grouping at all, since `5` is not three digits) — an earlier version
+  /// of this method stripped every separator unconditionally and silently
+  /// misread `500.5` as `5005`.
+  ///
   /// Returns null rather than guessing. A caller receiving null must ask the
   /// user; substituting a default would mean inventing a figure, which is
   /// the one thing this ledger may never do.
@@ -27,12 +38,33 @@ final class Money implements Comparable<Money> {
     final String trimmed = input.trim();
     if (trimmed.isEmpty) return null;
 
-    // Strip grouping separators only. A leading minus survives.
-    final String cleaned = trimmed.replaceAll(RegExp(r'[\s,._]'), '');
-    if (!RegExp(r'^-?\d+$').hasMatch(cleaned)) return null;
+    final bool negative = trimmed.startsWith('-');
+    final String body = negative ? trimmed.substring(1) : trimmed;
+    if (body.isEmpty) return null;
 
-    final int? value = int.tryParse(cleaned);
-    return value == null ? null : Money(value);
+    if (!RegExp(r'^[\d.,\s]+$').hasMatch(body)) return null;
+
+    final List<String> groups = body.split(RegExp(r'[.,\s]+'));
+    if (groups.any((String g) => g.isEmpty)) return null;
+
+    final int digits;
+    if (groups.length == 1) {
+      // No separators at all — a plain integer.
+      final int? value = int.tryParse(groups.single);
+      if (value == null) return null;
+      digits = value;
+    } else {
+      // With separators: the first group is 1–3 digits, and every group
+      // after it must be exactly three — anything else (like the lone "5"
+      // in "500.5") is not a valid thousands grouping and is refused.
+      if (groups.first.isEmpty || groups.first.length > 3) return null;
+      if (groups.skip(1).any((String g) => g.length != 3)) return null;
+      final int? value = int.tryParse(groups.join());
+      if (value == null) return null;
+      digits = value;
+    }
+
+    return Money(negative ? -digits : digits);
   }
 
   bool get isZero => units == 0;

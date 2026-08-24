@@ -1,7 +1,6 @@
 import "package:flutter/material.dart";
 import "package:provider/provider.dart";
 import "../../app/providers.dart";
-import "../../core/money.dart";
 import "../../data/ledger_repository.dart";
 import "../../domain/entry.dart";
 import "../../domain/enums.dart";

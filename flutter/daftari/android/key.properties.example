@@ -1,0 +1,14 @@
+# Copy this file to android/key.properties (NOT key.properties.example) and
+# fill in real values to produce a properly signed release APK/AAB.
+#
+# Generate a keystore first, if you don't have one:
+#   keytool -genkey -v -keystore ~/daftari-release.jks -keyalg RSA \
+#     -keysize 2048 -validity 10000 -alias daftari
+#
+# android/key.properties itself is gitignored — never commit real signing
+# credentials or a real keystore file to source control.
+
+storePassword=your_store_password
+keyPassword=your_key_password
+keyAlias=daftari
+storeFile=/absolute/path/to/daftari-release.jks

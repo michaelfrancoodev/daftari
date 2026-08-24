@@ -26,7 +26,7 @@ class ReviewScreen extends StatefulWidget {
 }
 
 class _ReviewScreenState extends State<ReviewScreen> {
-  late List<DraftEntry> _drafts = List.of(widget.args.drafts);
+  final List<DraftEntry> _drafts = List.of(widget.args.drafts);
   bool _saving = false;
 
   Future<void> _editDraft(int index) async {

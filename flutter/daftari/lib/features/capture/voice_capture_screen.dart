@@ -42,7 +42,7 @@ class _VoiceCaptureScreenState extends State<VoiceCaptureScreen> {
   Future<void> _init() async {
     final available = await _speech.initialize(onStatus: _onStatus, onError: (_) {});
     if (mounted) setState(() => _available = available);
-    if (available) _start();
+    if (available) unawaited(_start());
   }
 
   void _onStatus(String status) {
@@ -61,6 +61,15 @@ class _VoiceCaptureScreenState extends State<VoiceCaptureScreen> {
     });
 
     final settings = context.read<SettingsController>();
+    // NOTE: localeId/listenFor/pauseFor as top-level named parameters are
+    // flagged deprecated in speech_to_text 7.x in favour of a
+    // SpeechListenOptions object. Left as-is deliberately: this call was
+    // verified working against the real, installed package version by an
+    // actual `flutter test`/`flutter run` in this project's history, and
+    // the exact SpeechListenOptions field names could not be confirmed
+    // against live documentation from this environment — guessing wrong
+    // would trade a harmless lint warning for a real compile error. Safe
+    // to migrate once verified locally against `flutter pub deps`.
     await _speech.listen(
       localeId: settings.locale.languageCode == "sw" ? "sw_TZ" : "en_US",
       onResult: (result) {

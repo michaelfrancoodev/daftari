@@ -23,6 +23,11 @@ Follow [Drift's official web setup guide](https://drift.simonbinder.eu/platforms
 ```bash
 flutter pub get
 
+# Generates the real DAFTARI launcher icon (Android + web) from
+# assets/brand/icon.png — skip this and the app ships with Flutter's
+# generic default icon instead of the actual logo.
+dart run flutter_launcher_icons
+
 # Generates lib/data/database.g.dart (Drift's code generator) — required
 # once, and again any time a table in lib/data/database.dart changes.
 dart run build_runner build --delete-conflicting-outputs
@@ -40,6 +45,17 @@ To produce a release build:
 flutter build apk --release      # android/app/build/outputs/apk/release/app-release.apk
 flutter build web --release      # build/web/ — deploy this folder anywhere static hosting is available
 ```
+
+**Before distributing the release APK beyond your own test device**, set up real release signing — the build works and installs without this, signed with the debug key, but the Play Store (and most people you'd hand an APK to) expect a real one:
+
+```bash
+keytool -genkey -v -keystore ~/daftari-release.jks -keyalg RSA -keysize 2048 -validity 10000 -alias daftari
+cp android/key.properties.example android/key.properties
+# edit android/key.properties with the keystore path and the passwords you just set
+flutter build apk --release
+```
+
+`android/key.properties` is gitignored — never commit a real keystore or its passwords.
 
 ## Toolchain note — please read before trusting this blindly
 
