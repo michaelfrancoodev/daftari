@@ -39,6 +39,51 @@ ENTRY_KINDS = [
     "sale",
 ]
 
+
+def _firestore_client():
+    try:
+        from google.cloud import firestore
+
+        return firestore.Client()
+    except Exception:
+        return None
+
+
+def get_known_counterparties() -> dict:
+    """Returns the distinct counterparty names already on record for this
+    user, most recently used first.
+
+    A real ADK tool, called when the uncertain field is a counterparty
+    name: knowing that "Juma Mwita" is already an established supplier
+    makes it far more likely that an unclear "Juma" in a new recording
+    refers to the same person, rather than the model guessing from the
+    audio-derived text alone. Returns an honest empty list — never a
+    fabricated name — when Firestore is not configured or no history
+    exists yet.
+    """
+    client = _firestore_client()
+    if client is None:
+        return {"status": "unavailable", "counterparties": []}
+
+    try:
+        docs = (
+            client.collection("entries")
+            .where("counterparty", "!=", None)
+            .order_by("counterparty")
+            .order_by("occurredAt", direction="DESCENDING")
+            .limit(50)
+            .stream()
+        )
+        seen: list[str] = []
+        for doc in docs:
+            name = doc.to_dict().get("counterparty")
+            if name and name not in seen:
+                seen.append(name)
+        return {"status": "success", "counterparties": seen[:10]}
+    except Exception as exc:  # noqa: BLE001 — a lookup failure just means no extra context is available.
+        return {"status": "error", "counterparties": [], "message": str(exc)}
+
+
 root_agent = Agent(
     name="sikio",
     model=GEMINI_MODEL,
@@ -57,6 +102,13 @@ root_agent = Agent(
         "You will be given: the original verbatim sentence, which field is "
         "uncertain (amount, quantity, or counterparty), and what the "
         "on-device parser already extracted for the other fields.\n\n"
+        "When the uncertain field is a counterparty, call "
+        "get_known_counterparties first and check whether one of the "
+        "returned names is a close match to what the sentence seems to say "
+        "— a name already established in this user's own records is far "
+        "more likely to be correct than a new spelling invented from "
+        "scratch. For amount or quantity fields, this tool has nothing "
+        "useful to offer and should not be called.\n\n"
         "Respond with ONLY a single JSON object, no markdown fences, no "
         'commentary: {"resolved": <the corrected value, or null>, '
         '"confidence": "high" | "low"}.\n\n'
@@ -70,5 +122,5 @@ root_agent = Agent(
         "unresolved rather than become a guess that looks plausible. A "
         "wrong number that is believed is worse than an honest gap."
     ),
-    tools=[],
+    tools=[get_known_counterparties],
 )

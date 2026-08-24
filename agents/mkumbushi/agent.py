@@ -19,9 +19,51 @@ tonight or in three days, and an HTTP request cannot stay open that long.
 
 from __future__ import annotations
 
+from typing import Optional
+
 from google.adk.agents.llm_agent import Agent
 
 GEMINI_MODEL = "gemini-3.5-flash"
+
+
+def _firestore_client():
+    try:
+        from google.cloud import firestore
+
+        return firestore.Client()
+    except Exception:
+        return None
+
+
+def get_counterparty_history(counterparty: str) -> dict:
+    """Looks up recent synced entries involving a given counterparty name.
+
+    A real ADK tool call, not just an instruction: Mkumbushi can decide for
+    itself whether it needs this context before phrasing a loan question —
+    for example, to mention a partial repayment already on record instead
+    of asking as if nothing has happened yet. Returns an honest empty
+    result rather than fabricating history when Firestore is not
+    configured (local development) or the counterparty has no prior
+    entries — Rule #1 applies to tools exactly as it does to the ledger
+    itself: no invented figures.
+    """
+    client = _firestore_client()
+    if client is None:
+        return {"status": "unavailable", "entries": [], "note": "Firestore not configured in this environment"}
+
+    try:
+        docs = (
+            client.collection("entries")
+            .where("counterparty", "==", counterparty)
+            .order_by("occurredAt", direction="DESCENDING")
+            .limit(10)
+            .stream()
+        )
+        entries = [doc.to_dict() for doc in docs]
+        return {"status": "success", "entries": entries}
+    except Exception as exc:  # noqa: BLE001 — a lookup failure means "no context available", not a crash.
+        return {"status": "error", "entries": [], "message": str(exc)}
+
 
 root_agent = Agent(
     name="mkumbushi",
@@ -34,6 +76,12 @@ root_agent = Agent(
         "(oreNeverMilled, millingWithoutYield, or loanNeverRepaid), how "
         "long ago the relevant entry happened, and — for a loan — who it "
         "was to.\n\n"
+        "For a loanNeverRepaid gap, call get_counterparty_history first to "
+        "check whether any partial repayment already exists on record "
+        "before phrasing the question — a question that ignores a "
+        "repayment the user already made reads as if the app is not "
+        "paying attention, which undermines trust in everything else it "
+        "reports. For the other two gap kinds, you do not need this tool.\n\n"
         "Respond with ONLY the question itself, one short sentence, no "
         "quotation marks, no preamble, no explanation. It must be "
         "answerable with a single tap (yes/not yet, or a short fact) — "
@@ -44,5 +92,5 @@ root_agent = Agent(
         "'Mawe ya siku 4 zilizopita — umeshayasaga?' — plain, specific, "
         "and about the actual thing that happened, not a generic template."
     ),
-    tools=[],
+    tools=[get_counterparty_history],
 )

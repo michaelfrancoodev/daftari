@@ -15,14 +15,18 @@ agents:
     status: implemented
     pattern: Sequential
     model: gemini-3.5-flash
+    tools: [get_known_counterparties]
     trigger: "Called by the app once a network appears, only for a field the on-device Interpreter already flagged as uncertain"
     path: agents/sikio/
     endpoint: "POST /resolve-field"
     summary: >
       Refines an uncertain amount, quantity, or counterparty that
       lib/domain/interpreter.dart (the on-device, offline parser) could
-      not read with confidence. Never on the critical path of capture —
-      the device already works completely offline without this agent.
+      not read with confidence. Calls get_known_counterparties (a
+      real, read-only Firestore tool) when resolving a counterparty name,
+      so a name already established in the user's own records outweighs a
+      newly-guessed spelling. Never on the critical path of capture — the
+      device already works completely offline without this agent.
 
   - name: daftari
     translation: "Ledger"
@@ -44,6 +48,7 @@ agents:
     status: implemented
     pattern: "Loop, then long-running with human-in-the-loop"
     model: gemini-3.5-flash
+    tools: [get_counterparty_history]
     trigger: "Cloud Scheduler, every evening"
     path: agents/mkumbushi/
     endpoints: "POST /evening-check, POST /answer"
@@ -51,8 +56,11 @@ agents:
     summary: >
       Deterministic gap detection (gaps.py, a direct port of
       lib/domain/gap_detector.dart) finds what to ask about; Gemini
-      phrases the one resulting question naturally. /answer resolves a
-      question independently, since the reply may arrive days later.
+      phrases the one resulting question naturally, calling
+      get_counterparty_history (a real, read-only Firestore tool) first
+      for a loan question so it never asks as if a partial repayment
+      never happened. /answer resolves a question independently, since
+      the reply may arrive days later.
 
   - name: mlinganishi
     translation: "Reconciler"
