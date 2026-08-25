@@ -30,3 +30,4 @@ agents/**/venv/
 .DS_Store
 Thumbs.db
 tsconfig.tsbuildinfo
+.env
