@@ -27,15 +27,21 @@ GoRouter buildRouter(SettingsController settings) {
     initialLocation: "/",
     refreshListenable: settings,
     redirect: (context, state) {
-      final onboarding = state.matchedLocation.startsWith("/onboarding");
-      final splash = state.matchedLocation == "/";
-      if (!settings.onboarded && !onboarding && !splash) {
-        return "/onboarding/language";
+      // SplashScreen never navigates itself (see its own doc comment) —
+      // routing must always move a fresh launch somewhere. The previous
+      // version of this logic explicitly excluded "/" from the
+      // not-onboarded redirect, which meant a brand-new install landed on
+      // splash and simply stayed there forever, with nothing ever moving
+      // it to onboarding. Fixed: splash is treated as needing a redirect
+      // exactly like any other non-onboarding route would.
+      final bool onOnboarding = state.matchedLocation.startsWith("/onboarding");
+
+      if (!settings.onboarded) {
+        return onOnboarding ? null : "/onboarding/language";
       }
-      if (settings.onboarded && (onboarding || splash)) {
-        return "/home";
-      }
-      return null;
+
+      final bool onSplashOrOnboarding = onOnboarding || state.matchedLocation == "/";
+      return onSplashOrOnboarding ? "/home" : null;
     },
     routes: [
       GoRoute(path: "/", builder: (context, state) => const SplashScreen()),
