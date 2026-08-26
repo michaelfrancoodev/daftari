@@ -121,6 +121,20 @@ abstract final class Ledger {
     return grouped;
   }
 
+  /// Groups live entries by calendar day (most recent day first), each
+  /// day's key truncated to midnight — the basis of Home's "recent
+  /// reports" list. A day with zero entries never appears here; the
+  /// caller decides whether an empty day is worth showing at all.
+  static Map<DateTime, List<Entry>> groupByDay(List<Entry> entries) {
+    final Map<DateTime, List<Entry>> grouped = <DateTime, List<Entry>>{};
+    for (final Entry entry in entries.where((Entry e) => e.isLive)) {
+      final DateTime day = DateTime(entry.occurredAt.year, entry.occurredAt.month, entry.occurredAt.day);
+      grouped.putIfAbsent(day, () => <Entry>[]).add(entry);
+    }
+    final List<DateTime> sortedKeys = grouped.keys.toList()..sort((DateTime a, DateTime b) => b.compareTo(a));
+    return <DateTime, List<Entry>>{for (final DateTime day in sortedKeys) day: grouped[day]!};
+  }
+
   static Money valueOf({required Money perGram, required double grams}) => Money((perGram.units * grams).round());
 
   /// Compares a buyer's offer against what a batch actually cost the user

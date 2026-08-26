@@ -76,15 +76,14 @@ abstract class L {
   String get onboardingPromisesCta;
   String get homeGreeting;
   String get homeTodayLabel;
-  String get homeYourCostLabel;
-  String get homeNoYieldYet;
-  String get homeCostNote;
   String get homeMicHint;
-  String get homeBatchSummary;
   String get homeCaptureVoice;
   String get homeCaptureType;
   String get homeCaptureQuick;
   String get homeNoEntriesToday;
+  String get homeRecentReports;
+  String get homeNoRecentReports;
+  String get homeYesterday;
   String get chipOre;
   String get chipFuel;
   String get chipMilling;

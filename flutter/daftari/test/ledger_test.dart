@@ -114,6 +114,46 @@ void main() {
     });
   });
 
+  group("Ledger.groupByDay", () {
+    test("groups entries by calendar day, most recent first", () {
+      final grouped = Ledger.groupByDay([
+        _entry(kind: EntryKind.orePurchase, id: "1"), // 2026-08-12
+        _entry(kind: EntryKind.fuel, id: "2"),
+      ]);
+      expect(grouped.keys.single, DateTime(2026, 8, 12));
+      expect(grouped[DateTime(2026, 8, 12)]!.length, 2);
+    });
+
+    test("excludes voided entries", () {
+      final grouped = Ledger.groupByDay([
+        _entry(kind: EntryKind.orePurchase, id: "1", voidedBy: "void:1"),
+      ]);
+      expect(grouped, isEmpty);
+    });
+
+    test("orders multiple days newest first", () {
+      final grouped = Ledger.groupByDay([
+        Entry(
+          id: "old",
+          captureId: "c1",
+          kind: EntryKind.orePurchase,
+          occurredAt: DateTime(2026, 8, 1),
+          recordedAt: DateTime(2026, 8, 1),
+          amount: const Money(1),
+        ),
+        Entry(
+          id: "new",
+          captureId: "c1",
+          kind: EntryKind.orePurchase,
+          occurredAt: DateTime(2026, 8, 10),
+          recordedAt: DateTime(2026, 8, 10),
+          amount: const Money(1),
+        ),
+      ]);
+      expect(grouped.keys.toList(), [DateTime(2026, 8, 10), DateTime(2026, 8, 1)]);
+    });
+  });
+
   group("Ledger.valueOf", () {
     test("multiplies a per-gram figure by grams and rounds", () {
       expect(Ledger.valueOf(perGram: const Money(146429), grams: 4.2).units, 615002);

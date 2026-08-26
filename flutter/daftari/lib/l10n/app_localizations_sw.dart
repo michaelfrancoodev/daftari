@@ -138,19 +138,7 @@ class LSw extends L {
   String get homeTodayLabel => 'Leo';
 
   @override
-  String get homeYourCostLabel => 'Gharama Yako kwa Gramu';
-
-  @override
-  String get homeNoYieldYet => 'Bado hujaandika dhahabu kwenye batch hii';
-
-  @override
-  String get homeCostNote => 'Kutoka gharama zako halisi za ununuzi na uchakataji — kamwe si bei ya soko.';
-
-  @override
   String get homeMicHint => 'Bonyeza na Ongea';
-
-  @override
-  String get homeBatchSummary => 'Kundi la Sasa';
 
   @override
   String get homeCaptureVoice => 'Sema';
@@ -165,6 +153,15 @@ class LSw extends L {
   String get homeNoEntriesToday => 'Bado hakuna kumbukumbu leo';
 
   @override
+  String get homeRecentReports => 'Ripoti za Hivi Karibuni';
+
+  @override
+  String get homeNoRecentReports => 'Ripoti zako zitaonekana hapa mara utakaporekodi kitu';
+
+  @override
+  String get homeYesterday => 'Jana';
+
+  @override
   String get chipOre => 'Mawe';
 
   @override
@@ -174,7 +171,7 @@ class LSw extends L {
   String get chipMilling => 'Kusaga';
 
   @override
-  String get chipYield => 'Dhahabu';
+  String get chipYield => 'Mavuno';
 
   @override
   String get chipWages => 'Vibarua';
@@ -309,10 +306,10 @@ class LSw extends L {
   String get batchTotalCost => 'Jumla';
 
   @override
-  String get batchYield => 'Dhahabu';
+  String get batchYield => 'Mazao';
 
   @override
-  String get batchCostPerGram => 'Kwa Gramu';
+  String get batchCostPerGram => 'Kwa Kipimo';
 
   @override
   String get batchBeforeSelling => 'Kabla Hujauza';
@@ -321,7 +318,7 @@ class LSw extends L {
   String get presaleTitle => 'Kabla Hujauza';
 
   @override
-  String get presaleYourGold => 'Dhahabu Yako';
+  String get presaleYourGold => 'Mazao Yako';
 
   @override
   String get presaleBuyerOffers => 'Mnunuzi Anatoa';
@@ -456,7 +453,7 @@ class LSw extends L {
   String get settingsVersion => 'Toleo';
 
   @override
-  String get unitGrams => 'gramu';
+  String get unitGrams => 'vipimo';
 
   @override
   String get unitKilograms => 'kilo';

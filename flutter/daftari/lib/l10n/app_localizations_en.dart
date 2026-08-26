@@ -138,19 +138,7 @@ class LEn extends L {
   String get homeTodayLabel => 'Today';
 
   @override
-  String get homeYourCostLabel => 'Your cost per gram';
-
-  @override
-  String get homeNoYieldYet => 'No gold recorded yet in this batch';
-
-  @override
-  String get homeCostNote => 'From your own purchase and processing costs — never a market price.';
-
-  @override
   String get homeMicHint => 'Press and speak';
-
-  @override
-  String get homeBatchSummary => 'Current batch';
 
   @override
   String get homeCaptureVoice => 'Speak';
@@ -165,6 +153,15 @@ class LEn extends L {
   String get homeNoEntriesToday => 'No entries yet today';
 
   @override
+  String get homeRecentReports => 'Recent reports';
+
+  @override
+  String get homeNoRecentReports => 'Your reports will appear here once you record something';
+
+  @override
+  String get homeYesterday => 'Yesterday';
+
+  @override
   String get chipOre => 'Ore';
 
   @override
@@ -174,7 +171,7 @@ class LEn extends L {
   String get chipMilling => 'Milling';
 
   @override
-  String get chipYield => 'Gold yield';
+  String get chipYield => 'Yield';
 
   @override
   String get chipWages => 'Wages';
@@ -309,10 +306,10 @@ class LEn extends L {
   String get batchTotalCost => 'Total cost';
 
   @override
-  String get batchYield => 'Gold';
+  String get batchYield => 'Output';
 
   @override
-  String get batchCostPerGram => 'Cost per gram';
+  String get batchCostPerGram => 'Cost per unit';
 
   @override
   String get batchBeforeSelling => 'Before you sell';
@@ -321,7 +318,7 @@ class LEn extends L {
   String get presaleTitle => 'Before you sell';
 
   @override
-  String get presaleYourGold => 'Your gold';
+  String get presaleYourGold => 'Your output';
 
   @override
   String get presaleBuyerOffers => 'Buyer offers';
@@ -456,7 +453,7 @@ class LEn extends L {
   String get settingsVersion => 'Version';
 
   @override
-  String get unitGrams => 'grams';
+  String get unitGrams => 'units';
 
   @override
   String get unitKilograms => 'kilograms';

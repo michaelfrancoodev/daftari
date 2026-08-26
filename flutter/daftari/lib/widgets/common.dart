@@ -156,16 +156,22 @@ class DaftariBottomNav extends StatelessWidget {
   }
 }
 
-/// The eight universal capture chips, relabelled per role. Order matches
-/// the master specification's Home screen mockup.
+/// Capture chips, relabelled — and for two of them, included or not — per
+/// role. Milling and yield describe a physical processing step that only
+/// applies to a role actually producing something (the Miner role); a
+/// sponsor, buyer, or general trader recording stock, sales, and money
+/// movements has no use for either, so those two chips are simply absent
+/// for them rather than shown and ignored.
 List<({EntryKind kind, String label})> chipsForRole(UserRole role, L l) {
   final String ore = role == UserRole.trader ? l.chipStock : l.chipOre;
   final String fuel = role == UserRole.trader ? l.chipPower : l.chipFuel;
+  final bool showsProcessing = role == UserRole.miner;
+
   return [
     (kind: EntryKind.orePurchase, label: ore),
     (kind: EntryKind.fuel, label: fuel),
-    (kind: EntryKind.milling, label: l.chipMilling),
-    (kind: EntryKind.goldYield, label: l.chipYield),
+    if (showsProcessing) (kind: EntryKind.milling, label: l.chipMilling),
+    if (showsProcessing) (kind: EntryKind.goldYield, label: l.chipYield),
     (kind: EntryKind.wages, label: l.chipWages),
     (kind: EntryKind.loan, label: role == UserRole.sponsor ? l.chipAdvance : l.chipLoan),
     (kind: EntryKind.repayment, label: role == UserRole.sponsor ? l.chipRepaymentReceived : l.chipRepayment),

@@ -131,6 +131,25 @@ class LedgerRepository {
 
   Stream<List<Entry>> watchUncertain() => _db.watchUncertain();
 
+  /// A single past (or present) day's live entries — used both by the Day
+  /// Report screen when opened for a date other than today, and by Home's
+  /// "recent reports" list.
+  Future<List<Entry>> entriesForDay(DateTime day) {
+    final DateTime start = DateTime(day.year, day.month, day.day);
+    final DateTime end = start.add(const Duration(days: 1));
+    return _db.entriesBetween(start, end);
+  }
+
+  /// Every live entry from the last [days] calendar days, inclusive of
+  /// today — a single query the caller groups by day (see
+  /// `Ledger.groupByDay`), rather than one query per day.
+  Future<List<Entry>> entriesForRecentDays({int days = 7}) {
+    final DateTime todayStart = DateTime.now();
+    final DateTime start = DateTime(todayStart.year, todayStart.month, todayStart.day).subtract(Duration(days: days - 1));
+    final DateTime end = DateTime(todayStart.year, todayStart.month, todayStart.day).add(const Duration(days: 1));
+    return _db.entriesBetween(start, end);
+  }
+
   Future<List<Entry>> entriesForMonth(DateTime month) {
     final DateTime start = DateTime(month.year, month.month, 1);
     final DateTime end = DateTime(month.year, month.month + 1, 1);

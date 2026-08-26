@@ -55,6 +55,14 @@ class SettingsScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(title: Text(l.settingsTitle)),
+      // Bottom nav here too, matching every other primary screen — since
+      // this is reached from the "More" tab (and, from Home, via a pushed
+      // AppBar icon that already gives a working back arrow), the user
+      // always has at least one clear way out, whichever path got them
+      // here. Previously this screen had neither an automatic back arrow
+      // (it was reached with go(), not push()) nor a nav bar of its own —
+      // a genuine dead end some testers ran into.
+      bottomNavigationBar: DaftariBottomNav(currentIndex: 4, role: settings.role),
       body: ListView(
         children: [
           const SizedBox(height: Gap.md),

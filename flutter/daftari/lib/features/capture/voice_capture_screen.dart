@@ -12,11 +12,13 @@ import "../../theme/tokens.dart";
 
 /// Screen 5 — Kurekodi sauti (Voice capture).
 ///
-/// One press starts, another stops, and four seconds of silence stops it
-/// automatically for anyone who forgets. There is no time limit — a single
-/// utterance may hold the whole day. The transcript appears live, as it is
-/// heard, so the user can see whether the app understood correctly before
-/// anything is written anywhere.
+/// The user is entirely in control of when this starts and when it ends:
+/// one press starts, and it keeps listening — through pauses, through
+/// silence between sentences — until the same press is made again. There
+/// is no automatic stop on silence and no fixed time limit; a single
+/// recording may hold the whole day's transactions. The transcript
+/// appears live, as it is heard, so the user can see whether the app
+/// understood correctly before anything is written anywhere.
 class VoiceCaptureScreen extends StatefulWidget {
   const VoiceCaptureScreen({super.key});
 
@@ -28,10 +30,16 @@ class _VoiceCaptureScreenState extends State<VoiceCaptureScreen> {
   final stt.SpeechToText _speech = stt.SpeechToText();
   bool _available = false;
   bool _listening = false;
+  bool _stoppedByUser = false;
   String _transcript = "";
-  Timer? _silenceTimer;
   Duration _elapsed = Duration.zero;
   Timer? _clock;
+
+  /// An outer safety cap only — not a "stop after silence" behaviour.
+  /// Some platform speech engines refuse to listen indefinitely; this is
+  /// generous enough that a real recording session will essentially never
+  /// hit it, while still bounding worst-case resource use.
+  static const Duration _maxSessionLength = Duration(minutes: 20);
 
   @override
   void initState() {
@@ -46,13 +54,21 @@ class _VoiceCaptureScreenState extends State<VoiceCaptureScreen> {
   }
 
   void _onStatus(String status) {
-    if (status == "notListening" && _listening) _stop();
+    // The platform speech engine can stop itself for reasons outside the
+    // user's control (e.g. the outer safety cap above, an OS-level
+    // interruption). `_stoppedByUser` distinguishes that from the normal
+    // case where the user's own tap already called `_stop()` — in the
+    // normal case, this is a no-op, since `_listening` is already false.
+    if (status == "notListening" && _listening && !_stoppedByUser) {
+      _stop();
+    }
   }
 
   Future<void> _start() async {
     if (!_available) return;
     setState(() {
       _listening = true;
+      _stoppedByUser = false;
       _transcript = "";
       _elapsed = Duration.zero;
     });
@@ -70,25 +86,24 @@ class _VoiceCaptureScreenState extends State<VoiceCaptureScreen> {
     // against live documentation from this environment — guessing wrong
     // would trade a harmless lint warning for a real compile error. Safe
     // to migrate once verified locally against `flutter pub deps`.
+    //
+    // pauseFor is set equal to listenFor deliberately: pauseFor is what
+    // makes the platform engine stop listening on its own after a period
+    // of silence, and the whole point of this screen is that only the
+    // user's own tap ends a recording — a long pause mid-sentence must
+    // never be mistaken for "finished speaking."
     await _speech.listen(
       localeId: settings.locale.languageCode == "sw" ? "sw_TZ" : "en_US",
       onResult: (result) {
         setState(() => _transcript = result.recognizedWords);
-        _resetSilenceTimer();
       },
-      listenFor: const Duration(minutes: 10),
-      pauseFor: const Duration(seconds: 4),
+      listenFor: _maxSessionLength,
+      pauseFor: _maxSessionLength,
     );
-    _resetSilenceTimer();
-  }
-
-  void _resetSilenceTimer() {
-    _silenceTimer?.cancel();
-    _silenceTimer = Timer(const Duration(seconds: 4), _stop);
   }
 
   Future<void> _stop() async {
-    _silenceTimer?.cancel();
+    _stoppedByUser = true;
     _clock?.cancel();
     await _speech.stop();
     if (!mounted) return;
@@ -117,7 +132,6 @@ class _VoiceCaptureScreenState extends State<VoiceCaptureScreen> {
 
   @override
   void dispose() {
-    _silenceTimer?.cancel();
     _clock?.cancel();
     _speech.stop();
     super.dispose();

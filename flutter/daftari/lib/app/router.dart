@@ -75,7 +75,10 @@ GoRouter buildRouter(SettingsController settings) {
       GoRoute(path: "/batch", builder: (context, state) => const BatchScreen()),
       GoRoute(path: "/presale", builder: (context, state) => const PresaleScreen()),
       GoRoute(path: "/inbox", builder: (context, state) => const InboxScreen()),
-      GoRoute(path: "/day-report", builder: (context, state) => const DayReportScreen()),
+      GoRoute(
+        path: "/day-report",
+        builder: (context, state) => DayReportScreen(day: state.extra as DateTime?),
+      ),
       GoRoute(
         path: "/origin/:captureId",
         builder: (context, state) => OriginScreen(captureId: state.pathParameters["captureId"]!),

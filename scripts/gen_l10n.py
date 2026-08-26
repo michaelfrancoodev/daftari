@@ -9,7 +9,7 @@ Run this any time strings change. Output must be verified with a real
 import json
 from pathlib import Path
 
-ROOT = Path(__file__).resolve().parent.parent / "flutter" / "daftari"
+ROOT = Path("/home/claude/build/flutter/daftari")
 L10N_DIR = ROOT / "lib" / "l10n"
 
 # key -> (english, swahili)
@@ -71,24 +71,20 @@ STRINGS: dict[str, tuple[str, str]] = {
     # Home
     "homeGreeting": ("Hello", "Habari"),
     "homeTodayLabel": ("Today", "Leo"),
-    "homeYourCostLabel": ("Your cost per gram", "Gharama Yako kwa Gramu"),
-    "homeNoYieldYet": ("No gold recorded yet in this batch", "Bado hujaandika dhahabu kwenye batch hii"),
-    "homeCostNote": (
-        "From your own purchase and processing costs — never a market price.",
-        "Kutoka gharama zako halisi za ununuzi na uchakataji — kamwe si bei ya soko.",
-    ),
     "homeMicHint": ("Press and speak", "Bonyeza na Ongea"),
-    "homeBatchSummary": ("Current batch", "Kundi la Sasa"),
     "homeCaptureVoice": ("Speak", "Sema"),
     "homeCaptureType": ("Type", "Andika"),
     "homeCaptureQuick": ("Quick", "Haraka"),
     "homeNoEntriesToday": ("No entries yet today", "Bado hakuna kumbukumbu leo"),
+    "homeRecentReports": ("Recent reports", "Ripoti za Hivi Karibuni"),
+    "homeNoRecentReports": ("Your reports will appear here once you record something", "Ripoti zako zitaonekana hapa mara utakaporekodi kitu"),
+    "homeYesterday": ("Yesterday", "Jana"),
 
     # Capture chips — role-neutral core eight
     "chipOre": ("Ore", "Mawe"),
     "chipFuel": ("Fuel", "Mafuta"),
     "chipMilling": ("Milling", "Kusaga"),
-    "chipYield": ("Gold yield", "Dhahabu"),
+    "chipYield": ("Yield", "Mavuno"),
     "chipWages": ("Wages", "Vibarua"),
     "chipLoan": ("Loan given", "Mkopo"),
     "chipRepayment": ("Repayment", "Marejesho"),
@@ -152,13 +148,13 @@ STRINGS: dict[str, tuple[str, str]] = {
     "batchSaveAll": ("Save all", "Hifadhi Zote"),
     "batchCostBreakdown": ("Costs", "Gharama"),
     "batchTotalCost": ("Total cost", "Jumla"),
-    "batchYield": ("Gold", "Dhahabu"),
-    "batchCostPerGram": ("Cost per gram", "Kwa Gramu"),
+    "batchYield": ("Output", "Mazao"),
+    "batchCostPerGram": ("Cost per unit", "Kwa Kipimo"),
     "batchBeforeSelling": ("Before you sell", "Kabla Hujauza"),
 
     # Pre-sale
     "presaleTitle": ("Before you sell", "Kabla Hujauza"),
-    "presaleYourGold": ("Your gold", "Dhahabu Yako"),
+    "presaleYourGold": ("Your output", "Mazao Yako"),
     "presaleBuyerOffers": ("Buyer offers", "Mnunuzi Anatoa"),
     "presaleYourCost": ("This batch cost you", "Gharama Yako"),
     "presaleProfit": ("Profit at this offer", "Faida Ukiuza Sasa"),
@@ -222,7 +218,7 @@ STRINGS: dict[str, tuple[str, str]] = {
     "settingsVersion": ("Version", "Toleo"),
 
     # Units / currency
-    "unitGrams": ("grams", "gramu"),
+    "unitGrams": ("units", "vipimo"),
     "unitKilograms": ("kilograms", "kilo"),
     "currencyLabel": ("Shillings", "Shilingi"),
 
