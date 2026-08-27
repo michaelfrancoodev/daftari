@@ -23,7 +23,7 @@ export const dictionary = {
     heroKicker: "DAFTARI · Daftari lisiloweza kupotea",
     heroTitle: "Andika kwa sauti. Fanya kazi bila mtandao. Jua gharama yako ya kweli.",
     heroBody:
-      "Bonyeza mara moja, ongea kadri unavyotaka, bonyeza tena kuacha. DAFTARI hugawa sentensi yako kwenye matukio, huhifadhi kila neno lako, na hukueleza gharama ya kila gramu — kutokana na pesa yako mwenyewe, si makadirio ya soko — yote bila mtandao.",
+      "Bonyeza mara moja, ongea kadri unavyotaka, bonyeza tena kuacha. DAFTARI hugawa sentensi yako kwenye matukio, huhifadhi kila neno lako, na hukueleza gharama halisi — kutokana na pesa yako mwenyewe, si makadirio ya soko — yote bila mtandao.",
     ctaDownload: "PAKUA APK",
     apkMeta: "18 MB · Android 6.0 na juu",
     featuresKicker: "KWA NINI",
@@ -34,12 +34,12 @@ export const dictionary = {
         body: "Sentensi moja ndefu inagawanywa kiotomatiki kuwa manunuzi, mafuta, mikopo na mauzo — kila moja likiwa na neno lililotumika.",
       },
       {
-        title: "Gharama kwa gramu, papo hapo",
-        body: "Mara dhahabu ikitolewa, gharama ya kila gramu inahesabiwa kwenye simu, kutoka gharama zako halisi za ununuzi na uchakataji, bila mtandao, bila kusubiri.",
+        title: "Gharama halisi, papo hapo",
+        body: "Mara mzigo ukikamilika, gharama halisi inahesabiwa kwenye simu, kutoka gharama zako za ununuzi na uzalishaji, bila mtandao, bila kusubiri.",
       },
       {
         title: "Faida yako, si bei ya jumla",
-        body: "Kwa kuwa dhahabu ina aina na usafi tofauti, DAFTARI haitangazi 'bei ya dhahabu'. Inakuonyesha tu: uliuza kwa kiasi gani dhidi ya ulichogharimu — hesabu yako mwenyewe, si makadirio ya nje.",
+        body: "Kwa kuwa kila mtu ana bidhaa na wateja tofauti, DAFTARI haitangazi bei ya soko. Inakuonyesha tu: uliuza kwa kiasi gani dhidi ya ulichogharimu — hesabu yako mwenyewe, si makadirio ya nje.",
       },
       {
         title: "Haiwaachi maswali bila jibu",
@@ -76,7 +76,7 @@ export const dictionary = {
     trustNoPhone: "Hakuna namba ya simu",
     trustDeletable: "Unaweza kufuta wakati wowote",
     trustOffline: "Inafanya kazi bila mtandao",
-    footerTagline: "Daftari lisiloweza kupotea, kwa wachimbaji wadogo wa dhahabu.",
+    footerTagline: "Daftari lisiloweza kupotea, kwa mtu yeyote anayefanya biashara ndogo.",
     footerNotice: "Programu hii haitoi ushauri wa kuuza wala bei ya soko. Inaonyesha gharama na faida yako halisi tu.",
     footerRepo: "Msimbo",
     footerArch: "Muundo",
@@ -94,7 +94,7 @@ export const dictionary = {
     heroKicker: "DAFTARI · A ledger that cannot be lost",
     heroTitle: "Speak it. Work with no network. Know your real cost.",
     heroBody:
-      "Press once, speak for as long as you need, press again to stop. DAFTARI splits your sentence into events, keeps every word you said, and tells you what each gram actually cost you — from your own spending, not a market estimate — all of it offline.",
+      "Press once, speak for as long as you need, press again to stop. DAFTARI splits your sentence into events, keeps every word you said, and tells you what things actually cost you — from your own spending, not a market estimate — all of it offline.",
     ctaDownload: "DOWNLOAD APK",
     apkMeta: "18 MB · Android 6.0 and up",
     featuresKicker: "WHY IT EXISTS",
@@ -105,12 +105,12 @@ export const dictionary = {
         body: "One long sentence is split automatically into purchases, fuel, loans and sales — each one carrying the exact words it came from.",
       },
       {
-        title: "Cost per gram, instantly",
-        body: "The moment a yield is entered, cost per gram is computed on the device from your own purchase and processing costs — no network, no waiting.",
+        title: "Real cost, instantly",
+        body: "The moment an output is recorded, its real cost is computed on the device from your own purchase and processing costs — no network, no waiting.",
       },
       {
         title: "Your margin, not a market price",
-        body: "Gold varies in purity and grade, so DAFTARI never claims a single 'gold price'. It only ever shows what you sold for against what it cost you — your own arithmetic, never an outside estimate.",
+        body: "Every business and every buyer is different, so DAFTARI never claims a single market price. It only ever shows what you sold for against what it cost you — your own arithmetic, never an outside estimate.",
       },
       {
         title: "It never lets a gap go quiet",
@@ -147,7 +147,7 @@ export const dictionary = {
     trustNoPhone: "No phone number needed",
     trustDeletable: "Delete it at any time",
     trustOffline: "Works with no network",
-    footerTagline: "A ledger that cannot be lost, for small-scale gold miners.",
+    footerTagline: "A ledger that cannot be lost, for anyone running a small business.",
     footerNotice: "This app gives no advice on selling and claims no market price. It shows your own real cost and profit only.",
     footerRepo: "Code",
     footerArch: "Architecture",

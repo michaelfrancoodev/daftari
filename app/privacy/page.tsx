@@ -46,8 +46,8 @@ export default function PrivacyPage() {
 
         <p className="mt-8 text-xs leading-relaxed text-muted-foreground">
           {sw
-            ? "Programu hii haitoi ushauri wa kuuza dhahabu yako. Inaonyesha hesabu na bei iliyotangazwa rasmi tu; uamuzi unabaki wako."
-            : "This app gives no advice on whether to sell your gold. It shows arithmetic and the published reference price only; the decision remains yours."}
+            ? "Programu hii haitoi ushauri wa kuuza. Inaonyesha hesabu ya gharama na faida yako halisi tu; uamuzi unabaki wako."
+            : "This app gives no advice on whether to sell. It shows your own real cost and profit arithmetic only; the decision remains yours."}
         </p>
       </div>
       <SiteFooter />

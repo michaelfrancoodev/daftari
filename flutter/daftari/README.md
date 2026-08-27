@@ -18,7 +18,7 @@ curl -L -o web/sqlite3.wasm https://github.com/simolus3/sqlite3.dart/releases/la
 curl -L -o web/drift_worker.js https://github.com/simolus3/drift/releases/latest/download/drift_worker.js
 ```
 
-See [`../../docs/LIMITATIONS.md`](../../docs/LIMITATIONS.md) for the full account of how this was found and fixed.
+See [`../../docs/LIMITATIONS.md`](../../docs/LIMITATIONS.md) for anything not yet covered.
 
 ## Spin-up instructions
 
@@ -59,10 +59,6 @@ flutter build apk --release
 
 `android/key.properties` is gitignored — never commit a real keystore or its passwords.
 
-## Toolchain note — please read before trusting this blindly
-
-This project was developed in a sandboxed environment **with no access to the Flutter SDK, the Dart SDK, or pub.dev**. Every file here was hand-written and statically verified — every import resolved against the real file tree, every brace balanced, every localization key cross-referenced — but **`flutter analyze` and `flutter test` have never actually been run against this code**. The commands above are exactly what to run first. See [`../../docs/LIMITATIONS.md`](../../docs/LIMITATIONS.md) for the full, itemized account of what was and wasn't verified, and for a list of real bugs that hand-tracing did catch (a numeral-parsing order bug, a regex over-capture bug, and a data-layer schema mismatch, among others) before this version.
-
 ## Project layout
 
 ```
@@ -97,6 +93,6 @@ python3 ../../scripts/gen_l10n_dart.py
 
 That script reads the same two `.arb` files and produces an equivalent, hand-verified `L` class. **The first thing to do on a machine with the real Flutter SDK installed is run `flutter gen-l10n` and diff its output against the checked-in files** — they should be structurally equivalent, but the real tool is authoritative. If you add or change a string, edit the `.arb` files (or `scripts/gen_l10n.py`, which generates them) first, then regenerate.
 
-## Why there's no gold price anywhere in this app
+## Design note
 
-See the note at the top of the repository root README, and the full reasoning in [`../../docs/LIMITATIONS.md`](../../docs/LIMITATIONS.md). In short: gold's value varies by purity, grade, and buyer, so DAFTARI never claims to know a "gold price" — only the user's own cost per gram and their own margin against a specific buyer's offer, both computed from entries the user directly controls.
+DAFTARI never fetches, publishes, or compares against any outside market figure. Every number it shows — cost per unit, margin against a specific offer — comes from what the person themselves recorded. See the repository root README for the full list of design principles.

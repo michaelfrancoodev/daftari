@@ -27,13 +27,13 @@ export default function ArchitecturePage() {
             "Flutter (Android + Web) — lib/domain/ na lib/data/",
             "SQLite ya ndani kupitia Drift — Capture na Entry tables",
             "Interpreter, Ledger, GapDetector — kazi safi, bila mtandao",
-            "Hakuna 'bei ya dhahabu' popote — gharama na faida ni zako mwenyewe tu",
+            "Hakuna bei ya soko popote — gharama na faida ni zako mwenyewe tu",
           ]
         : [
             "Flutter (Android + Web) — lib/domain/ and lib/data/",
             "Local SQLite via Drift — Capture and Entry tables",
             "Interpreter, Ledger, GapDetector — pure functions, no network",
-            "No 'gold price' anywhere — cost and profit are the user's own only",
+            "No external market price anywhere — cost and profit are the user's own only",
           ],
     },
     {
@@ -84,8 +84,8 @@ export default function ArchitecturePage() {
       icon: ShieldCheck,
       title: sw ? "Kanuni zinazoshikiliana" : "Rules holding it together",
       items: sw
-        ? ["Sheria #2: kila kitu muhimu kinafanya kazi bila mtandao", "Sheria #6: pesa ni integer, kamwe decimal", "Sheria mpya: hakuna 'bei ya dhahabu' popote — gharama na faida ni zako tu"]
-        : ["Rule #2: everything needed at the moment of decision works offline", "Rule #6: money is an integer, never a decimal", "New rule: no 'gold price' anywhere — cost and profit are the user's own only"],
+        ? ["Sheria #2: kila kitu muhimu kinafanya kazi bila mtandao", "Sheria #6: pesa ni integer, kamwe decimal", "Sheria mpya: hakuna bei ya soko popote — gharama na faida ni zako tu"]
+        : ["Rule #2: everything needed at the moment of decision works offline", "Rule #6: money is an integer, never a decimal", "New rule: no external market price anywhere — cost and profit are the user's own only"],
     },
   ]
 

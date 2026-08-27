@@ -45,14 +45,14 @@ The device holds the truth. The cloud adds intelligence over time, but nothing o
 │  VERCEL — the marketing / landing website (Next.js)             │
 │  Deployed entirely separately from the agents above.           │
 │  Static content plus two informational pages (/architecture,   │
-│  /privacy). No gold price, no live data feed, no dependency     │
-│  on any Cloud Run service.                                      │
+│  /privacy). No external price feed, no dependency on any        │
+│  Cloud Run service.                                             │
 └─────────────────────────────────────────────────────────────┘
 ```
 
 ## Why no "Bei" (price) agent
 
-An earlier iteration of this project's design included a fifth agent that fetched and published a daily gold reference price. That design was deliberately abandoned: gold is not a fungible commodity at the point a small-scale miner sells it — purity, recovery, grade, and buyer trust all move the number a single published figure cannot capture. Publishing one anyway would have taught users to trust a number that systematically misrepresents their actual position. See [`LIMITATIONS.md`](LIMITATIONS.md) for the full reasoning and what replaced it.
+An earlier design considered a fifth agent that fetched a daily external reference price. That was deliberately left out: the value of what a person produces varies by quality, grade, and buyer, so a single published figure would misrepresent what any individual actually receives. DAFTARI reports only numbers the person themselves controls — what something cost to produce, and what a specific buyer is offering right now.
 
 ## The agent fleet, in detail
 

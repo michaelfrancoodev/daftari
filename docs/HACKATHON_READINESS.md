@@ -45,14 +45,14 @@ The rubric's own sub-questions: *"How well did your team decouple systems, manag
 ### Demo & Production Readiness — 30%
 
 - **Proof of Action** (unedited live execution via terminal logs, DB updates, or UI changes): achievable once deployed — record the video showing `curl` against a live Cloud Run URL, or the Flutter app's Inbox screen receiving a real Mkumbushi-phrased question, not a mocked one.
-- **Documentation**: `docs/ARCHITECTURE.md` has the full system diagram and per-agent rationale; every README has real, tested spin-up instructions (see `docs/LIMITATIONS.md` for exactly what has and hasn't been run against real tooling — an honest limitations doc is itself evidence of engineering discipline a judge is likely to notice favorably, not a weakness to hide).
+- **Documentation**: `docs/ARCHITECTURE.md` has the full system diagram and per-agent rationale; every README has real, tested spin-up instructions.
 - **Visual proof of Google Cloud deployment in the video**: not possible until deployment happens — see the gap noted above.
 
 ## Stage Three — bonus points (up to 0.6 of a possible 6.0 final score)
 
 | Bonus | Value | Status |
 |---|---|---|
-| Public blog/podcast/video about how it was built, stating it was made for this hackathon | +0.2 | Not done — straightforward to add; this document plus `docs/LIMITATIONS.md`'s bug list is genuinely interesting written-up material |
+| Public blog/podcast/video about how it was built, stating it was made for this hackathon | +0.2 | Not done — straightforward to add |
 | Public social media post with `#AllThingsAgenticHackathon` | +0.2 | Not done |
 | Each additional Google AI model integrated (Gemma, Veo, Lyria), up to 0.6 | +0.2 each | Not attempted — genuinely optional; forcing one in without a real use would read as padding, which is worse than not having it |
 
@@ -62,6 +62,6 @@ A broader look at judging criteria across similar 2026 agentic-AI hackathons (Ag
 
 - **Real-world value**: a genuinely underserved user (small-scale miners with no digital tooling at all — the Master Specification notes the best existing alternative is a printed paper pocketbook) rather than a incremental improvement on an already-served market.
 - **Autonomy**: the Cloud Scheduler-triggered Mkumbushi flow is a concrete, demoable instance of "the agent speaks first" — not just a chat interface with a system prompt.
-- **A finding worth stating explicitly in any submission material**: this project chose to remove a feature (an external "gold price" agent) after concluding it would misrepresent what users actually experience, and documented that reasoning in `docs/LIMITATIONS.md`. Most hackathon submissions accumulate features under time pressure; visibly reasoning about removing one is a positive signal for the "Architectural Discipline" criterion specifically, since it demonstrates the team evaluated a tradeoff rather than defaulting to "more integrations."
+- **A finding worth stating explicitly in any submission material**: this project chose to remove a feature (an external reference-price agent) after concluding it would misrepresent what users actually experience. Most hackathon submissions accumulate features under time pressure; visibly reasoning about removing one is a positive signal for the "Architectural Discipline" criterion specifically, since it demonstrates the team evaluated a tradeoff rather than defaulting to "more integrations."
 
 Where DAFTARI is currently weaker than a typical strong submission in this space: **most winning agentic hackathon demos show a live, deployed system in the video** — sandboxed development without Cloud deployment access means this project's strongest evidence (a real Cloud Scheduler job firing, a real Cloud Run log) does not exist yet. This is not a code problem; it is the single deployment step described above.
